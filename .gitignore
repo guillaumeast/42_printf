@@ -1,0 +1,6 @@
+.vsccode/
+.DS_Store
+a.out
+libftprintf.a
+libft/obj
+libft/libft.a

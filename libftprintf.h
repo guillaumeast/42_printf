@@ -4,7 +4,13 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-# include "types.h"
-# include "ft_printf.h"
+# include "libft/libft.h"
+
+typedef int    t_bool;
+
+# define TRUE 1
+# define FALSE 0
+
+void ft_printf(const char *fstring, ...);
 
 #endif
