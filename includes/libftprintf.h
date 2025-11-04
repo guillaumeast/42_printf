@@ -4,7 +4,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-# include "libft/libft.h"
+# include "libft.h"
 
 typedef int    t_bool;
 
