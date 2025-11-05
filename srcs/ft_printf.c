@@ -1,26 +1,33 @@
 #include "libftprintf.h"
 
-static void  dispatch_format(char c, va_list *args);
+static t_bool  dispatch_format(char c, va_list *args);
 
-void ft_printf(const char *fstring, ...)
+int ft_printf(const char *fstring, ...)
 {
     va_list args;
+	int		count;
     size_t  i;
 
     va_start(args, fstring);
+	count = 0;
     i = 0;
     while (fstring[i])
     {
         if (fstring[i] == '%')
-            dispatch_format(fstring[++i], &args);
+		{
+            if (!dispatch_format(fstring[++i], &args))
+				break;
+		}
 		else
         	write(1, &(fstring[i]), 1);
+		count++;
         i++;
     }
     va_end(args);
+	return (count);
 }
 
-static void  dispatch_format(char c, va_list *args)
+static t_bool  dispatch_format(char c, va_list *args)
 {
 	// TODO: handle incorrect couple format-value ?
     if (c == 'c')	// TODO: cast to unsigned char inside ft_putchar_fd()
@@ -40,9 +47,6 @@ static void  dispatch_format(char c, va_list *args)
     else if (c == '%')
         write(1, "%", 1);
 	else
-	{
-		write(2, "[Unsupported: '%", 17);
-		write(2, &c, 1);
-		write(2, "']", 2);
-	}
+		return (FALSE);
+	return (TRUE);
 }

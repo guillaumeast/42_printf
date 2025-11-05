@@ -6,11 +6,10 @@
 
 # include "libft.h"
 
-typedef int    t_bool;
-
+typedef char t_bool;
 # define TRUE 1
 # define FALSE 0
 
-void ft_printf(const char *fstring, ...);
+int ft_printf(const char *fstring, ...);
 
 #endif

@@ -1,9 +1,7 @@
-- Update	libft `ft_putchar_fd()` => cast `int` to `unsigned char`
-- Add		libft `ft_putnbr_unsigned_fd()`
-- Add		libft `ft_putnbr_base_fd()`
-- Add		libft `ft_putnbr_unsigned_base_fd()`
-- Check		libft all implementations
-- Add		libft enforced test cases
+- Implement custom `ft_putnbr` ... to handle `count` increment while writing
 
-- Add		printf return value `int`
-- Add		printf `Makefile`
+- Create `42_breaker` repo with **curlable** `sh` script
+	- Downloads `tests/` dir (depending on tested project: `libft`, `printf`...)
+	- Backups original `Makefile`
+	- Adds a `42_breaker` rule to `Makefile` which compiles project with `criterion` and run tests
+	- Adds a `restore` rule to `Makefile` to delete `tests/` dir and restore original `Makefile` and run `make fclean`
