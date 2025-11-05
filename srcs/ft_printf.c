@@ -1,52 +1,55 @@
 #include "libftprintf.h"
 
-static t_bool  dispatch_format(char c, va_list *args);
+static int  dispatch_format(char format, va_list *args);
 
-int ft_printf(const char *fstring, ...)
+int	ft_printf(const char *fstring, ...)
 {
-    va_list args;
+	va_list args;
+	int		written;
 	int		count;
-    size_t  i;
+	int		i;
 
-    va_start(args, fstring);
+	va_start(args, fstring);
 	count = 0;
-    i = 0;
-    while (fstring[i])
-    {
-        if (fstring[i] == '%')
+	i = -1;
+	while (fstring[++i])
+	{
+		if (fstring[i] == '%')
 		{
-            if (!dispatch_format(fstring[++i], &args))
+			written = dispatch_format(fstring[++i], &args);
+			if (written < 0)
 				break;
+			count += (int) written;
 		}
 		else
-        	write(1, &(fstring[i]), 1);
-		count++;
-        i++;
-    }
-    va_end(args);
+		{
+			write(1, &(fstring[i]), 1);
+			count++;
+		}
+	}
+	va_end(args);
 	return (count);
 }
 
-static t_bool  dispatch_format(char c, va_list *args)
+static int	dispatch_format(char format, va_list *args)
 {
-	// TODO: handle incorrect couple format-value ?
-    if (c == 'c')	// TODO: cast to unsigned char inside ft_putchar_fd()
-		ft_putchar_fd((unsigned char) va_arg(*args, int), 1);
-    else if (c == 's')
-		ft_putstr_fd((char *) va_arg(*args, char *), 1);
-    else if (c == 'd' || c == 'i')
-        ft_putnbr_fd((int) va_arg(*args, int), 1);
-    else if (c == 'u')
-		ft_putnbr_fd((unsigned int) va_arg(*args, int), 1); // TODO: add ft_putnbr_unsigned_fd()
-    // else if (c == 'x')
-	// 	ft_putnbr_base((unsigned int) va_arg(*args, int), "0123456789abcdef"); // TODO: add ft_putnbr_unsigned_base_fd()
-    // else if (c == 'X')
-	// 	ft_putnbr_base((unsigned int) va_arg(*args, int), "0123456789ABCDEF"); // TODO: add ft_putnbr_unsigned_base_fd()
-	// else if (c == 'p')
-	// 	ft_putnbr_base((unsigned int) va_arg(*args, void *), "0123456789abcdef"); // TODO: add ft_putnbr_unsigned_base_fd()
-    else if (c == '%')
-        write(1, "%", 1);
+	if (format == 'c')
+		return (ft_putchar(va_arg(*args, int)));
+	else if (format == 's')
+		return (ft_putstr(va_arg(*args, char *)));
+	else if (format == 'd' || format == 'i')
+		return (ft_putnbr(va_arg(*args, int)));
+	else if (format == 'u')
+		return (ft_putunbr(va_arg(*args, unsigned int)));
+	else if (format == 'x')
+		return (ft_putnbr_hex(va_arg(*args, unsigned int), FALSE));
+	else if (format == 'X')
+		return (ft_putnbr_hex(va_arg(*args, unsigned int), TRUE));
+	else if (format == 'p')
+		return (ft_putnbr_hex(va_arg(*args, void *), TRUE));
+	else if (format == '%')
+		return ((int) write(1, "%", 1));
 	else
-		return (FALSE);
-	return (TRUE);
+		return (-1);
 }
+

@@ -1,4 +1,4 @@
-- Implement custom `ft_putnbr` ... to handle `count` increment while writing
+- Add `42 headers` (with vscode plugin)
 
 - Create `42_breaker` repo with **curlable** `sh` script
 	- Downloads `tests/` dir (depending on tested project: `libft`, `printf`...)

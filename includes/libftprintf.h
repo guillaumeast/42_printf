@@ -4,11 +4,10 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-# include "libft.h"
-
-typedef char t_bool;
-# define TRUE 1
-# define FALSE 0
+# include "types.h"
+# include "chars.h"
+# include "decimal.h"
+# include "base.h"
 
 int ft_printf(const char *fstring, ...);
 
