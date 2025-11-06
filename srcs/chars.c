@@ -14,6 +14,8 @@ int	ft_putstr(char *str)
 	ssize_t	count;
 	int		i;
 
+	if (!str)
+		return ((int) write(1, "(null)", 6));
 	count = 0;
 	i = 0;
 	while (str[i])
@@ -22,6 +24,7 @@ int	ft_putstr(char *str)
 		if (written < 0)
 			return (-1);
 		count += written;
+		i++;
 	}
 	return ((int) count);
 }

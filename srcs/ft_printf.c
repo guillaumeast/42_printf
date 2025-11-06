@@ -42,11 +42,11 @@ static int	dispatch_format(char format, va_list *args)
 	else if (format == 'u')
 		return (ft_putunbr(va_arg(*args, unsigned int)));
 	else if (format == 'x')
-		return (ft_putnbr_hex(va_arg(*args, unsigned int), FALSE));
+		return (ft_putunbr_hex(va_arg(*args, unsigned int), FALSE));
 	else if (format == 'X')
-		return (ft_putnbr_hex(va_arg(*args, unsigned int), TRUE));
+		return (ft_putunbr_hex(va_arg(*args, unsigned int), TRUE));
 	else if (format == 'p')
-		return (ft_putnbr_hex(va_arg(*args, void *), TRUE));
+		return (ft_putulnbr_hex((unsigned long) va_arg(*args, void *)));
 	else if (format == '%')
 		return ((int) write(1, "%", 1));
 	else

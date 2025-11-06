@@ -1,8 +1,9 @@
 #include "libftprintf.h"
 
 static void	print_rec(unsigned int nbr, const char *base, ssize_t *count);
+static void	print_lrec(unsigned long nbr, const char *base, ssize_t *count);
 
-int	ft_putnbr_hex(unsigned int nbr, t_bool uppercase)
+int	ft_putunbr_hex(unsigned int nbr, t_bool uppercase)
 {
 	ssize_t		count;
 	const char	*base;
@@ -24,6 +25,34 @@ static void	print_rec(unsigned int nbr, const char *base, ssize_t *count)
 
 	if (nbr >= HEX_BASE_LEN)
 		print_rec(nbr / HEX_BASE_LEN, base, count);
+	i = nbr % HEX_BASE_LEN;
+	c = base[i];
+	written = write(1, &c, 1);
+	if (written > 0)
+		*count += written;
+}
+
+int	ft_putulnbr_hex(unsigned long nbr)
+{
+	ssize_t		count;
+	const char	*base;
+
+	count = write(1, "0x", 2);
+	if (count < 0)
+		return (0);
+	base = HEX_LOW_BASE;
+	print_lrec(nbr, base, &count);
+	return ((int) count);
+}
+
+static void	print_lrec(unsigned long nbr, const char *base, ssize_t *count)
+{
+	int		i;
+	char	c;
+	ssize_t	written;
+
+	if (nbr >= HEX_BASE_LEN)
+		print_lrec(nbr / HEX_BASE_LEN, base, count);
 	i = nbr % HEX_BASE_LEN;
 	c = base[i];
 	written = write(1, &c, 1);

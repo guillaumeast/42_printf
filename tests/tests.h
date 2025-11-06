@@ -25,6 +25,9 @@ typedef struct s_test
 	t_result	ft_printf;
 }	t_test;
 
-void	run_test(const char *format, long arg);
+void	run_test_long(const char *format, long arg);
+void	run_test_string(const char *format, const char *arg);
+void	run_test_unsigned(const char *format, unsigned int arg);
+void	run_test_pointer(const char *format, void *arg);
 
 #endif

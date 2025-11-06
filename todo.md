@@ -1,3 +1,8 @@
+- Add **NULL** test everywhere it's possible
+- Add **overflow** test everywhere it's possible
+- Add **mix** formats `"my %s is %d long and %i large for %u time (%x or %X in hex) and points to %p"`
+- Vérifier que tous les retours de write() sont bien checkés au cas où le syscall échoue
+
 - Add `42 headers` (with vscode plugin)
 
 - Create `42_breaker` repo with **curlable** `sh` script

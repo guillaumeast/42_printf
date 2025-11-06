@@ -1,7 +1,8 @@
 #ifndef REDIRECT_H
 # define REDIRECT_H
 
-# include "tests.h"
+#include <stdio.h>
+#include <unistd.h>
 
 # define OUT_MAX 1024
 
