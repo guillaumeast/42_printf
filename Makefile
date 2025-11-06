@@ -16,18 +16,16 @@ OBJ			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 #		UNIT TESTS CONFIG		#
 #################################
 
-# Criterion flags (portable: use pkg-config if available)
 CRIT_CFLAGS	:= $(shell pkg-config --cflags criterion 2>/dev/null)
 CRIT_LIBS	:= $(shell pkg-config --libs   criterion 2>/dev/null)
 ifeq ($(CRIT_LIBS),)
 CRIT_LIBS	:= -lcriterion
 endif
 
-# Additional flags to improve debugger traces
-TEST_CFLAGS	= $(CFLAGS) -I$(TEST_INC_DIR) -g3
+TEST_CFLAGS	= $(CFLAGS) -I$(TEST_INC_DIR)
 
 TEST_DIR	:= tests
-TEST_SRCS	:= $(wildcard $(TEST_DIR)/srcs/*.c) $(wildcard $(TEST_DIR)/units/*.c)
+TEST_SRCS	:= $(wildcard $(TEST_DIR)/srcs/*.c) $(wildcard $(TEST_DIR)/srcs/units/*.c)
 TEST_INC_DIR := $(TEST_DIR)/includes
 TEST_OBJDIR	:= $(TEST_DIR)/obj
 TEST_OBJS	:= $(TEST_SRCS:%.c=$(TEST_OBJDIR)/%.o)
@@ -52,7 +50,7 @@ $(OBJ_DIR)/%.o : %.c
 
 $(TEST_OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(TEST_CFLAGS) $(CRIT_CFLAGS) -I$(TEST_DIR) -c $< -o $@
+	$(CC) $(TEST_CFLAGS) $(CRIT_CFLAGS) -c $< -o $@
 
 $(TEST_BIN): $(NAME) $(TEST_OBJS)
 	$(CC) $(TEST_CFLAGS) $(CRIT_CFLAGS) -I$(TEST_DIR) \
