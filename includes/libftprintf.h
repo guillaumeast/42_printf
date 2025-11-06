@@ -5,9 +5,7 @@
 # include <unistd.h>
 
 # include "types.h"
-# include "chars.h"
-# include "decimal.h"
-# include "base.h"
+# include "utils.h"
 
 int ft_printf(const char *fstring, ...);
 

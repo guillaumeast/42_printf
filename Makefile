@@ -4,10 +4,10 @@
 
 NAME		:= libftprintf.a
 CC			:= cc
-CFLAGS		= -Wall -Wextra -Werror $(addprefix -I, $(INC_DIRS))
+CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR)
 
-SRCS		:= $(wildcard srcs/*.c)
-INC_DIRS	:= includes
+SRCS		:= srcs/ft_printf.c $(wildcard srcs/utils/*.c)
+INC_DIR		:= includes
 
 OBJ_DIR		:= obj
 OBJ			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -24,10 +24,11 @@ CRIT_LIBS	:= -lcriterion
 endif
 
 # Additional flags to improve debugger traces
-TEST_CFLAGS	:= $(CFLAGS) -g3
+TEST_CFLAGS	= $(CFLAGS) -I$(TEST_INC_DIR) -g3
 
 TEST_DIR	:= tests
-TEST_SRCS	:= $(wildcard $(TEST_DIR)/*.c)
+TEST_SRCS	:= $(wildcard $(TEST_DIR)/srcs/*.c) $(wildcard $(TEST_DIR)/units/*.c)
+TEST_INC_DIR := $(TEST_DIR)/includes
 TEST_OBJDIR	:= $(TEST_DIR)/obj
 TEST_OBJS	:= $(TEST_SRCS:%.c=$(TEST_OBJDIR)/%.o)
 TEST_BIN 	:= $(TEST_DIR)/run_tests

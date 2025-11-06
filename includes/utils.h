@@ -1,5 +1,5 @@
-#ifndef HEXA_H
-# define HEXA_H
+#ifndef UTILS_H
+# define UTILS_H
 
 # include "types.h"
 
@@ -7,6 +7,10 @@
 # define HEX_LOW_BASE "0123456789abcdef"
 # define HEX_UPP_BASE "0123456789ABCDEF"
 
+int	ft_putchar(int c);
+int	ft_putstr(char *str);
+int	ft_putnbr(int n);
+int	ft_putunbr(unsigned int n);
 int	ft_putunbr_hex(unsigned int nbr, t_bool uppercase);
 int	ft_putulnbr_hex(unsigned long nbr);
 
