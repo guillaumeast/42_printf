@@ -10,9 +10,18 @@
 # include "colors.h"
 # include "redirect.h"
 # include "expect.h"
+# include "units.h"
 
 # define FORMATTED_INPUT_SIZE 64
 # define TIMEOUT 1
+
+extern int g_passed;
+extern int g_failed;
+extern int g_total;
+
+typedef int t_bool;
+# define TRUE 1
+# define FALSE 0
 
 typedef struct s_result
 {
