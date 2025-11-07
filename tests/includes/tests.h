@@ -1,17 +1,21 @@
 #ifndef TESTS_H
 # define TESTS_H
 
-# include <criterion/criterion.h>
-# include <criterion/redirect.h>
 # include <stdio.h>
 # include <limits.h>
-
 # include "libftprintf.h"
 # include "redirect.h"
+# include "colors.h"
 
-# define RED "\033[31m"
-# define YELLOW "\033[33m"
-# define NONE "\033[0m"
+# define TO_STRING_BUFF_SIZE 64
+# define to_string(x, buf, size) \
+    _Generic((x), \
+        int: snprintf(buf, size, "%d", x), \
+        long: snprintf(buf, size, "%ld", x), \
+        unsigned int: snprintf(buf, size, "%u", x), \
+        double: snprintf(buf, size, "%f", x), \
+        default: snprintf(buf, size, "%s", "(unsupported)") \
+    )
 
 typedef struct s_result
 {

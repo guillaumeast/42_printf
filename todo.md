@@ -1,3 +1,8 @@
+- Add **test suite** feature
+- Add **timeout** feature
+- Add **crash** feature
+- Add `test.zsh` launcher (update `Makefile`, run tests, then restore original `Makefile` ?)
+
 - Add **NULL** test everywhere it's possible
 - Add **overflow** test everywhere it's possible
 - Add **mix** formats `"my %s is %d long and %i large for %u time (%x or %X in hex) and points to %p"`

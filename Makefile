@@ -16,20 +16,14 @@ OBJ			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 #		UNIT TESTS CONFIG		#
 #################################
 
-CRIT_CFLAGS	:= $(shell pkg-config --cflags criterion 2>/dev/null)
-CRIT_LIBS	:= $(shell pkg-config --libs   criterion 2>/dev/null)
-ifeq ($(CRIT_LIBS),)
-CRIT_LIBS	:= -lcriterion
-endif
-
-TEST_CFLAGS	= $(CFLAGS) -I$(TEST_INC_DIR)
-
 TEST_DIR	:= tests
 TEST_SRCS	:= $(wildcard $(TEST_DIR)/srcs/*.c) $(wildcard $(TEST_DIR)/srcs/units/*.c)
 TEST_INC_DIR := $(TEST_DIR)/includes
 TEST_OBJDIR	:= $(TEST_DIR)/obj
 TEST_OBJS	:= $(TEST_SRCS:%.c=$(TEST_OBJDIR)/%.o)
 TEST_BIN 	:= $(TEST_DIR)/run_tests
+
+TEST_CFLAGS	:= $(CFLAGS) -I$(TEST_INC_DIR)
 
 #################################
 #			RULES - LIB			#
@@ -50,11 +44,11 @@ $(OBJ_DIR)/%.o : %.c
 
 $(TEST_OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(TEST_CFLAGS) $(CRIT_CFLAGS) -c $< -o $@
+	$(CC) $(TEST_CFLAGS) -c $< -o $@
 
 $(TEST_BIN): $(NAME) $(TEST_OBJS)
-	$(CC) $(TEST_CFLAGS) $(CRIT_CFLAGS) -I$(TEST_DIR) \
-		-o $(TEST_BIN) $(TEST_OBJS) $(NAME) $(CRIT_LIBS)
+	$(CC) $(TEST_CFLAGS) -I$(TEST_DIR) \
+		-o $(TEST_BIN) $(TEST_OBJS) $(NAME)
 
 test: $(TEST_BIN)
 	./$(TEST_BIN) --jobs 1
