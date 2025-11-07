@@ -1,6 +1,4 @@
-- Add **test suite** feature
-- Add **timeout** feature
-- Add **crash** feature
+- Add `main.c`
 - Add `test.zsh` launcher (update `Makefile`, run tests, then restore original `Makefile` ?)
 
 - Add **NULL** test everywhere it's possible

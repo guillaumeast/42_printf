@@ -1,23 +1,20 @@
-#include "tests.h"
+#include "test.h"
 
-TestSuite(d, .timeout = 1);
-
-Test(d, basic_values)
+void	test_d(void)
 {
+	printf("👉 Testing '%%d' with basic values\n");
 	run_test_long("%d", 0);
 	run_test_long("%d", 1);
-}
 
-Test(d, sign_behavior)
-{
+	printf("👉 Testing '%%d' with signed values\n");
 	run_test_long("%d", +0);
 	run_test_long("%d", -0);
 	run_test_long("%d", +1);
 	run_test_long("%d", -1);
-}
 
-Test(d, limits)
-{
+	printf("👉 Testing '%%d' with int limits\n");
 	run_test_long("%d", INT_MAX);
 	run_test_long("%d", INT_MIN);
+
+	printf("\n");
 }
