@@ -1,2 +1,4 @@
 **/obj/
 libftprintf.a
+test.c
+a.out

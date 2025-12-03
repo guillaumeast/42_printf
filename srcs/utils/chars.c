@@ -6,11 +6,11 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:37:52 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/03 01:26:42 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:28:14 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <unistd.h>
 
 int	ft_putchar(int c)
 {

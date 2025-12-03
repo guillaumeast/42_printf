@@ -6,11 +6,11 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:38:01 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/03 01:26:53 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:28:25 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <unistd.h>
 
 static void	write_rec(long nbr, ssize_t *count);
 static void	write_urec(unsigned int nbr, ssize_t *count);
@@ -38,11 +38,17 @@ static void	write_rec(long nbr, ssize_t *count)
 	ssize_t	written;
 	char	c;
 
+	if (*count == -1)
+		return ;
 	if (nbr >= 10)
 		write_rec(nbr / 10, count);
+	if (*count == -1)
+		return ;
 	c = nbr % 10 + '0';
 	written = write(1, &c, 1);
-	if (written > 0)
+	if (written < 0)
+		*count = -1;
+	else
 		*count += written;
 }
 
@@ -60,10 +66,16 @@ static void	write_urec(unsigned int nbr, ssize_t *count)
 	ssize_t	written;
 	char	c;
 
+	if (*count == -1)
+		return ;
 	if (nbr >= 10)
-		write_rec(nbr / 10, count);
+		write_urec(nbr / 10, count);
+	if (*count == -1)
+		return ;
 	c = nbr % 10 + '0';
 	written = write(1, &c, 1);
-	if (written > 0)
+	if (written < 0)
+		*count = -1;
+	else
 		*count += written;
 }

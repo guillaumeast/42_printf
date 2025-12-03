@@ -6,11 +6,13 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:38:08 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/03 01:26:08 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:33:19 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <stdarg.h>
+#include <unistd.h>
+#include "utils.h"
 
 static int	dispatch_format(char format, va_list *args);
 
@@ -30,13 +32,21 @@ int	ft_printf(const char *fstring, ...)
 		{
 			written = dispatch_format(fstring[++i], &args);
 			if (written < 0)
+			{
+				count = -1;
 				break ;
+			}
 			count += (int) written;
 		}
 		else
 		{
-			write(1, &(fstring[i]), 1);
-			count++;
+			written = (int) write(1, &(fstring[i]), 1);
+			if (written < 0)
+			{
+				count = -1;
+				break ;
+			}
+			count += (int) written;
 		}
 	}
 	va_end(args);

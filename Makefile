@@ -1,9 +1,9 @@
 NAME		:= libftprintf.a
 CC			:= cc
-CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR)
+CFLAGS		= -Wall -Wextra -Werror
 
 SRCS		:= srcs/ft_printf.c $(wildcard srcs/utils/*.c)
-INC_DIR		:= includes
+INCLUDES	:= -Iincludes
 
 OBJ_DIR		:= obj
 OBJS		:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -15,7 +15,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o : %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
