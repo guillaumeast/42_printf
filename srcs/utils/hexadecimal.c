@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:38:05 by gastesan          #+#    #+#             */
-/*   Updated: 2025/11/06 02:38:06 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 01:26:28 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_putunbr_hex(unsigned int nbr, t_bool uppercase)
 	if (uppercase)
 		base = HEX_UPP_BASE;
 	else
-	 	base = HEX_LOW_BASE;
+		base = HEX_LOW_BASE;
 	print_rec(nbr, base, &count);
 	return ((int) count);
 }

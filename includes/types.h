@@ -1,7 +1,19 @@
-#ifndef PRINTF_TYPES_H
-# define PRINTF_TYPES_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/03 01:23:52 by gastesan          #+#    #+#             */
+/*   Updated: 2025/12/03 01:25:04 by gastesan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef int t_bool;
+#ifndef TYPES_H
+# define TYPES_H
+
+typedef int	t_bool;
 
 # define TRUE 1
 # define FALSE 0

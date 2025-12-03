@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:37:52 by gastesan          #+#    #+#             */
-/*   Updated: 2025/11/08 19:33:14 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 01:26:42 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_putchar(int c)
 {
-	unsigned char uc;
+	unsigned char	uc;
 
 	uc = (unsigned char) c;
 	return ((int) write(1, &uc, 1));

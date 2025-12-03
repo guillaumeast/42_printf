@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:38:01 by gastesan          #+#    #+#             */
-/*   Updated: 2025/11/06 02:38:02 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 01:26:53 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_putnbr(int n)
 
 static void	write_rec(long nbr, ssize_t *count)
 {
-	ssize_t written;
+	ssize_t	written;
 	char	c;
 
 	if (nbr >= 10)
@@ -57,7 +57,7 @@ int	ft_putunbr(unsigned int n)
 
 static void	write_urec(unsigned int nbr, ssize_t *count)
 {
-	ssize_t written;
+	ssize_t	written;
 	char	c;
 
 	if (nbr >= 10)

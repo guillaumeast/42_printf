@@ -6,17 +6,17 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 02:38:08 by gastesan          #+#    #+#             */
-/*   Updated: 2025/11/08 19:32:15 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/03 01:26:08 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static int  dispatch_format(char format, va_list *args);
+static int	dispatch_format(char format, va_list *args);
 
 int	ft_printf(const char *fstring, ...)
 {
-	va_list args;
+	va_list	args;
 	int		written;
 	int		count;
 	int		i;
@@ -30,7 +30,7 @@ int	ft_printf(const char *fstring, ...)
 		{
 			written = dispatch_format(fstring[++i], &args);
 			if (written < 0)
-				break;
+				break ;
 			count += (int) written;
 		}
 		else
@@ -64,4 +64,3 @@ static int	dispatch_format(char format, va_list *args)
 	else
 		return (-1);
 }
-
