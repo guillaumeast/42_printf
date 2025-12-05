@@ -5,72 +5,115 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 02:38:08 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/03 10:33:19 by gastesan         ###   ########.fr       */
+/*   Created: 2025/12/05 20:25:52 by gastesan          #+#    #+#             */
+/*   Updated: 2025/12/05 21:46:15 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include <unistd.h>
-#include "utils.h"
 
-static int	dispatch_format(char format, va_list *args);
+/*----- TODO: move into libft (START) -----*/
+#define BUFF_SIZE 128
+#define BUFF_GROWTH_RATIO 2
+
+typedef struct s_buff
+{
+	char	*data;
+	size_t	cap;
+	size_t	len;
+}	t_buff;
+
+bool	buff_init(t_buff *buff)
+{
+	buff->data = malloc(BUFF_SIZE);
+	if (!buff)
+		return (false);
+	buff->data[0] = '\0';
+	buff->cap = BUFF_SIZE;
+	buff->len = 0;
+	return (true);
+}
+
+bool	buff_grow(t_buff *buff)
+{
+	size_t	new_cap;
+
+	new_cap = buff->cap * BUFF_GROWTH_RATIO;
+	if (!ft_realloc(buff->data, new_cap))
+		return (false);
+	buff->cap = new_cap;
+	return (true);
+}
+
+bool	buff_append(t_buff *buff, const char *str, long n)
+{
+	size_t	strlen;
+	size_t	i;
+
+	if (!buff || !str)
+		return (false);
+	strlen = ft_strnlen(str, n);
+	if (buff->len + strlen >= buff->cap && !buff_grow(buff))
+		return (false);
+	i = 0;
+	while (i < strlen && (n == -1 || i < (size_t)n))
+	{
+		buff->data[buff->len + i] = str[i];
+		i++;
+	}
+	buff->len = buff->len + i - 1;
+	return (true);
+}
+
+void	buff_free(t_buff *buff)
+{
+	if (buff->data)
+		free(buff->data);
+	buff->data = NULL;
+}
+
+char	*ft_strchr(const char *str);	// TODO
+
+/*----- TODO: move into libft (END) -----*/
+
+static int	flush(t_buff *buff, va_list *args, bool is_error);
+
+char	*convert(char **fstring_ptr, va_list *args);	// TODO
 
 int	ft_printf(const char *fstring, ...)
 {
+	t_buff	buff;
+	char	*ptr;
+	char	*next_conversion;
 	va_list	args;
-	int		written;
-	int		count;
-	int		i;
 
+	if (!buff_init(&buff))
+		return (-1);
+	ptr = fstring;
 	va_start(args, fstring);
-	count = 0;
-	i = -1;
-	while (fstring[++i])
+	while ((next_conversion = ft_strchr(ptr)))
 	{
-		if (fstring[i] == '%')
-		{
-			written = dispatch_format(fstring[++i], &args);
-			if (written < 0)
-			{
-				count = -1;
-				break ;
-			}
-			count += (int) written;
-		}
-		else
-		{
-			written = (int) write(1, &(fstring[i]), 1);
-			if (written < 0)
-			{
-				count = -1;
-				break ;
-			}
-			count += (int) written;
-		}
+		if (!buff_append(&buff, ptr, next_conversion - ptr))
+			return (flush(&buff, &args, true));
+		ptr = next_conversion;
+		if (!buff_append(&buff, convert(&ptr, &args), -1))
+			return (flush(&buff, &args, true));
 	}
-	va_end(args);
-	return (count);
+	buff_append(&buff, ptr, -1);
+	return (flush(&buff, &args, false));
 }
 
-static int	dispatch_format(char format, va_list *args)
+static int	flush(t_buff *buff, va_list *args, bool is_error)
 {
-	if (format == 'c')
-		return (ft_putchar(va_arg(*args, int)));
-	else if (format == 's')
-		return (ft_putstr(va_arg(*args, char *)));
-	else if (format == 'd' || format == 'i')
-		return (ft_putnbr(va_arg(*args, int)));
-	else if (format == 'u')
-		return (ft_putunbr(va_arg(*args, unsigned int)));
-	else if (format == 'x')
-		return (ft_putunbr_hex(va_arg(*args, unsigned int), FALSE));
-	else if (format == 'X')
-		return (ft_putunbr_hex(va_arg(*args, unsigned int), TRUE));
-	else if (format == 'p')
-		return (ft_putulnbr_hex((unsigned long) va_arg(*args, void *)));
-	else if (format == '%')
-		return ((int) write(1, "%", 1));
-	else
+	int	written;
+	
+	va_end(*args);
+	written = (int)write(1, buff->data, buff->len);
+	buff_free(buff);
+	if (is_error)
 		return (-1);
+	return (written);
 }
