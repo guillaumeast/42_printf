@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 21:45:32 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/13 01:46:04 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 03:05:52 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	rules_parse(t_rules *rules, const char **fstring)
 	rules->width_enabled = false;
 	rules->width = -1;
 	rules->conversion = '\0';
+	rules->is_zero = false;
 	if (**fstring != '%')
 	{
 		parse_flags(rules, fstring);

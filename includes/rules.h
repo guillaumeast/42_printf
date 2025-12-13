@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 20:21:21 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/13 01:28:24 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 03:05:39 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_rules
 	bool	width_enabled;
 	int		width;
 	char	conversion;
+	bool	is_zero;
 }	t_rules;
 
 void	rules_parse(t_rules *rules, const char **fstring);
