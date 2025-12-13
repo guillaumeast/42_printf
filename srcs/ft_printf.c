@@ -6,114 +6,96 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 20:25:52 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/05 21:46:15 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/12 23:31:54 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "append.h"
+#include "rules.h"
 #include <stdarg.h>
-#include <stdbool.h>
-#include <stdlib.h>
 #include <unistd.h>
 
-/*----- TODO: move into libft (START) -----*/
-#define BUFF_SIZE 128
-#define BUFF_GROWTH_RATIO 2
+#define BUFF_SIZE 512
 
-typedef struct s_buff
-{
-	char	*data;
-	size_t	cap;
-	size_t	len;
-}	t_buff;
-
-bool	buff_init(t_buff *buff)
-{
-	buff->data = malloc(BUFF_SIZE);
-	if (!buff)
-		return (false);
-	buff->data[0] = '\0';
-	buff->cap = BUFF_SIZE;
-	buff->len = 0;
-	return (true);
-}
-
-bool	buff_grow(t_buff *buff)
-{
-	size_t	new_cap;
-
-	new_cap = buff->cap * BUFF_GROWTH_RATIO;
-	if (!ft_realloc(buff->data, new_cap))
-		return (false);
-	buff->cap = new_cap;
-	return (true);
-}
-
-bool	buff_append(t_buff *buff, const char *str, long n)
-{
-	size_t	strlen;
-	size_t	i;
-
-	if (!buff || !str)
-		return (false);
-	strlen = ft_strnlen(str, n);
-	if (buff->len + strlen >= buff->cap && !buff_grow(buff))
-		return (false);
-	i = 0;
-	while (i < strlen && (n == -1 || i < (size_t)n))
-	{
-		buff->data[buff->len + i] = str[i];
-		i++;
-	}
-	buff->len = buff->len + i - 1;
-	return (true);
-}
-
-void	buff_free(t_buff *buff)
-{
-	if (buff->data)
-		free(buff->data);
-	buff->data = NULL;
-}
-
-char	*ft_strchr(const char *str);	// TODO
-
-/*----- TODO: move into libft (END) -----*/
-
-static int	flush(t_buff *buff, va_list *args, bool is_error);
-
-char	*convert(char **fstring_ptr, va_list *args);	// TODO
+static bool	parse(t_buff *buff, const char *fstring, va_list *args);
+static bool	append(t_buff *buff, t_rules *rules, va_list *args);
+static bool	append_str(t_buff *buff, const char *str);
 
 int	ft_printf(const char *fstring, ...)
 {
 	t_buff	buff;
-	char	*ptr;
-	char	*next_conversion;
 	va_list	args;
+	bool	success;
+	int		written;
 
-	if (!buff_init(&buff))
+	if (!buff_init(&buff, BUFF_SIZE))
 		return (-1);
-	ptr = fstring;
 	va_start(args, fstring);
-	while ((next_conversion = ft_strchr(ptr)))
-	{
-		if (!buff_append(&buff, ptr, next_conversion - ptr))
-			return (flush(&buff, &args, true));
-		ptr = next_conversion;
-		if (!buff_append(&buff, convert(&ptr, &args), -1))
-			return (flush(&buff, &args, true));
-	}
-	buff_append(&buff, ptr, -1);
-	return (flush(&buff, &args, false));
-}
-
-static int	flush(t_buff *buff, va_list *args, bool is_error)
-{
-	int	written;
-	
-	va_end(*args);
-	written = (int)write(1, buff->data, buff->len);
-	buff_free(buff);
-	if (is_error)
+	success = parse(&buff, fstring, &args);
+	va_end(args);
+	written = (int)write(1, buff.data, buff.len);
+	buff_free(&buff);
+	if (!success)
 		return (-1);
 	return (written);
+}
+
+static bool	parse(t_buff *buff, const char *fstring, va_list *args)
+{
+	const char	*next_conversion;
+	t_rules		rules;
+	
+	while ((next_conversion = ft_strchr(fstring, '%')))
+	{
+		if (!buff_append(buff, fstring, next_conversion - fstring))
+			return (false);
+		fstring = next_conversion + 1;
+		rules_parse(&rules, &fstring);
+		if (rules.conversion == '%')
+		{
+			if (!buff_append(buff, "%", 1))
+				return (false);
+		}
+		else if (!append(buff, &rules, args))
+			return (false);
+	}
+	return (buff_append(buff, fstring, -1));
+}
+
+static bool	append(t_buff *buff, t_rules *rules, va_list *args)
+{
+	t_buff	tmp_buff;
+	bool	success;
+	
+	buff_init(&tmp_buff, 0);
+	success = false;
+	if (rules->conversion == 'c')
+		success = append_char(&tmp_buff, va_arg(*args, int));
+	else if (rules->conversion == 's')
+		success = append_str(&tmp_buff, va_arg(*args, char *));
+	else if (rules->conversion == 'd' || rules->conversion == 'i')
+		success = append_int(&tmp_buff, va_arg(*args, int));
+	else if (rules->conversion == 'u')
+		success = append_uint(&tmp_buff, va_arg(*args, unsigned int));
+	else if (rules->conversion == 'x')
+		success = append_hex(&tmp_buff, va_arg(*args, unsigned int), false);
+	else if (rules->conversion == 'X')
+		success = append_hex(&tmp_buff, va_arg(*args, unsigned int), true);
+	else if (rules->conversion == 'p')
+		success = append_ptr(&tmp_buff, (unsigned long)va_arg(*args, void *));
+	if (success)
+		success = rules_apply(&tmp_buff, rules);
+	if (success)
+		success = buff_append(buff, tmp_buff.data, (long)tmp_buff.len);
+	buff_free(&tmp_buff);
+	return (success);
+}
+
+static bool	append_str(t_buff *buff, const char *str)
+{
+	if (!str)
+		return (buff_append(buff, "(null)", 6));
+	else
+		return (buff_append(buff, str, -1));
 }

@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chars.c                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 02:37:52 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/03 10:28:14 by gastesan         ###   ########.fr       */
+/*   Created: 2025/12/03 01:23:55 by gastesan          #+#    #+#             */
+/*   Updated: 2025/12/10 16:46:05 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#ifndef UTILS_H
+# define UTILS_H
 
-int	ft_putchar(int c)
-{
-	unsigned char	uc;
+#include <stdbool.h>
 
-	uc = (unsigned char) c;
-	return ((int) write(1, &uc, 1));
-}
+# define HEX_BASE_LEN 16
+# define HEX_LOW_BASE "0123456789abcdef"
+# define HEX_UPP_BASE "0123456789ABCDEF"
 
-int	ft_putstr(char *str)
-{
-	ssize_t	written;
-	ssize_t	count;
-	int		i;
+int	ft_putchar(int c);
+int	ft_putstr(char *str);
+int	ft_putnbr(int n);
+int	ft_putunbr(unsigned int n);
+int	ft_putunbr_hex(unsigned int nbr, bool uppercase);
+int	ft_putulnbr_hex(unsigned long nbr);
 
-	if (!str)
-		return ((int) write(1, "(null)", 6));
-	count = 0;
-	i = 0;
-	while (str[i])
-	{
-		written = write(1, &(str[i]), 1);
-		if (written < 0)
-			return (-1);
-		count += written;
-		i++;
-	}
-	return ((int) count);
-}
+#endif
