@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rules_apply.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/13 01:39:42 by gastesan          #+#    #+#             */
+/*   Updated: 2025/12/13 02:02:54 by gastesan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "rules.h"
 #include <stdlib.h>
@@ -50,9 +62,9 @@ static bool	apply_plus_space(t_buff *buff, t_rules *r)
 {
 	char	sign;
 
-	sign = buff->data[0];
-	if ((!r->plus && !r->space) || sign == '-')
+	if ((!r->plus && !r->space) || buff->data[0] == '-')
 		return (true);
+	sign = buff->data[0];
 	if (r->plus)
 	{
 		sign = '+';
@@ -68,16 +80,14 @@ static bool	apply_plus_space(t_buff *buff, t_rules *r)
 
 static bool	apply_hex_prefix(t_buff *buff, t_rules *rules)
 {
-	char	conv;
 	char	prefix[2];
 
-	conv = rules->conversion;
-	if (!rules->hex_prefix)
+	if (!rules->hex_prefix || buff->data[0] == '(')
 		return (true);
 	if (buff->len == 0 || (buff->len == 1 && buff->data[0] == '0'))
 		return (true);
 	prefix[0] = '0';
-	if (conv == 'X')
+	if (rules->conversion == 'X')
 		prefix[1] = 'X';
 	else
 		prefix[1] = 'x';

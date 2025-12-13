@@ -6,16 +6,16 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 20:21:21 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/12 23:26:09 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 01:28:24 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RULES_H
 # define RULES_H
 
-#include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
+# include "libft.h"
+# include <stdbool.h>
+# include <stddef.h>
 
 typedef struct s_rules
 {

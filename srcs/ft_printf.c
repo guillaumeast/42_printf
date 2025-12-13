@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 20:25:52 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/12 23:31:54 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 01:47:29 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ static bool	parse(t_buff *buff, const char *fstring, va_list *args)
 {
 	const char	*next_conversion;
 	t_rules		rules;
-	
-	while ((next_conversion = ft_strchr(fstring, '%')))
+
+	next_conversion = ft_strchr(fstring, '%');
+	while (next_conversion)
 	{
 		if (!buff_append(buff, fstring, next_conversion - fstring))
 			return (false);
@@ -59,6 +60,7 @@ static bool	parse(t_buff *buff, const char *fstring, va_list *args)
 		}
 		else if (!append(buff, &rules, args))
 			return (false);
+		next_conversion = ft_strchr(fstring, '%');
 	}
 	return (buff_append(buff, fstring, -1));
 }
@@ -67,7 +69,7 @@ static bool	append(t_buff *buff, t_rules *rules, va_list *args)
 {
 	t_buff	tmp_buff;
 	bool	success;
-	
+
 	buff_init(&tmp_buff, 0);
 	success = false;
 	if (rules->conversion == 'c')

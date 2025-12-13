@@ -6,15 +6,12 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 21:45:32 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/12 23:25:55 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 01:46:04 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "rules.h"
-
-static const char	flag_set[] = "-0# +";
-static const char	conversion_set[] = "csdiuxXp";
 
 static void	parse_flags(t_rules *rules, const char **fstring);
 static void	parse_width(t_rules *rules, const char **fstring);
@@ -23,6 +20,8 @@ static void	normalize(t_rules *rules);
 
 void	rules_parse(t_rules *rules, const char **fstring)
 {
+	const char	conversion_set[] = "csdiuxXp";
+
 	rules->plus = false;
 	rules->space = false;
 	rules->hex_prefix = false;
@@ -47,8 +46,9 @@ void	rules_parse(t_rules *rules, const char **fstring)
 
 static void	parse_flags(t_rules *rules, const char **fstring)
 {
-	char	c;
-	
+	const char	flag_set[] = "-0# +";
+	char		c;
+
 	while (ft_isincharset(**fstring, flag_set))
 	{
 		c = **fstring;
@@ -79,7 +79,7 @@ static void	parse_precision(t_rules *rules, const char **fstring)
 	rules->zero_padding = false;
 	(*fstring)++;
 	rules->precision = ft_atoi(*fstring);
-	while(ft_isdigit(**fstring))
+	while (ft_isdigit(**fstring))
 		(*fstring)++;
 }
 

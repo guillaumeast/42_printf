@@ -30,6 +30,8 @@ $(OBJ_DIR)/%.o : %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+bonus: all
+
 test: re
 	$(CC) $(TEST_SRCS) $(NAME) $(TEST_CFLAGS) -o $(TEST_NAME)
 	$(TEST_NAME)
