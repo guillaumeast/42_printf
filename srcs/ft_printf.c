@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 20:25:52 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/13 01:47:29 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 17:12:28 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static bool	parse(t_buff *buff, const char *fstring, va_list *args);
 static bool	append(t_buff *buff, t_rules *rules, va_list *args);
-static bool	append_str(t_buff *buff, const char *str);
+static bool	append_str(t_buff *buff, t_rules *rules, const char *str);
 
 int	ft_printf(const char *fstring, ...)
 {
@@ -75,7 +75,7 @@ static bool	append(t_buff *buff, t_rules *rules, va_list *args)
 	if (rules->conversion == 'c')
 		success = append_char(&tmp_buff, va_arg(*args, int));
 	else if (rules->conversion == 's')
-		success = append_str(&tmp_buff, va_arg(*args, char *));
+		success = append_str(&tmp_buff, rules, va_arg(*args, char *));
 	else if (rules->conversion == 'd' || rules->conversion == 'i')
 		success = append_int(&tmp_buff, va_arg(*args, int));
 	else if (rules->conversion == 'u')
@@ -94,10 +94,15 @@ static bool	append(t_buff *buff, t_rules *rules, va_list *args)
 	return (success);
 }
 
-static bool	append_str(t_buff *buff, const char *str)
+static bool	append_str(t_buff *buff, t_rules *rules, const char *str)
 {
 	if (!str)
-		return (buff_append(buff, "(null)", 6));
+	{
+		if (rules->precision != -1 && rules->precision < 6)
+			return (true);
+		else
+			return (buff_append(buff, "(null)", 6));
+	}
 	else
 		return (buff_append(buff, str, -1));
 }
