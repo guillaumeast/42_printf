@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:39:42 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/13 03:10:11 by gastesan         ###   ########.fr       */
+/*   Updated: 2025/12/13 17:20:24 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static bool	apply_width(t_buff *b, t_rules *r)
 		success = buff_append(b, padding, (long)padding_len);
 	else if (r->zero_padding && (b->data[0] == '-' || r->plus || r->space))
 		success = buff_insert(b, 1, padding, (long)padding_len);
-	else if (r->zero_padding && b->data[0] == '0'
+	else if (r->zero_padding && b->len >= 2 && b->data[0] == '0'
 		&& (b->data[1] == 'x' || b->data[1] == 'X'))
 		success = buff_insert(b, 2, padding, (long)padding_len);
 	else
