@@ -113,6 +113,20 @@ This avoids the original `printf()` _undefined behaviors_ and ensures **determin
 - All allocations are checked
 - No leaks under normal execution
 
+### Compiler format checking
+
+The `ft_printf` prototype is annotated with `__attribute__((format(printf, 1, 2)))`.
+
+This enables the compiler and IDEs to perform the same format string
+checks as for the standard `printf()`, including:
+- format / argument type mismatches
+- missing or extra arguments
+
+This provides **early error detection at compile time** and improves
+developer experience without impacting runtime behavior.
+
+> ✌️ Same safety guarantees as printf, zero runtime cost.
+
 ## 🧩 Algorithm explanation
 
 ### High-level flow
