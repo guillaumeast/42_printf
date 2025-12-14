@@ -60,7 +60,7 @@ make bonus
 cc <my_main.c> libftprintf.a -Iincludes
 ```
 
-> `libft` is automatically built and linked by `make` rules (used for
+> [`libft`](https://github.com/guillaumeast/42_libft) is automatically built and linked by `make` rules (used for
 string utilities and memory helpers).
 
 ### Usage
