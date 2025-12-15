@@ -59,4 +59,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all test clean fclean re
+.PHONY: all bonus debug test clean fclean re
