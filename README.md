@@ -38,7 +38,7 @@ All mandatory conversions (`c` `s` `p` `d` `i` `u` `x` `X` `%`) are implemented 
 ```
 .
 ├── README.md
-├── libftprintf.h		# Public header
+├── ft_printf.h			# Public header
 ├── includes/			# Private headers
 ├── srcs
 │   ├── ft_printf.c
