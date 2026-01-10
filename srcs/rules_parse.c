@@ -6,7 +6,7 @@
 /*   By: gastesan <gastesan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 21:45:32 by gastesan          #+#    #+#             */
-/*   Updated: 2025/12/13 03:05:52 by gastesan         ###   ########.fr       */
+/*   Updated: 2026/01/06 21:15:01 by gastesan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	parse_width(t_rules *rules, const char **fstring)
 
 static void	parse_precision(t_rules *rules, const char **fstring)
 {
-	rules->zero_padding = false;
 	(*fstring)++;
 	rules->precision = ft_atoi(*fstring);
 	while (ft_isdigit(**fstring))
