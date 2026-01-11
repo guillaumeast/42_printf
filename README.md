@@ -7,6 +7,8 @@
 [![Bonus](https://img.shields.io/badge/Bonus%20included-YES-darkgreen)](#)
 [![Grade: 125/100](https://img.shields.io/badge/Grade-125%2F100-darkgreen)]()
 
+<img width="144" height="74" alt="printf" src="https://github.com/user-attachments/assets/dbb39b8f-ed16-4512-9a0e-447f189bbade" />
+
 After evaluation, I refactored this project and integrated it into my [libft](https://github.com/guillaumeast/42_libft) as:  
 - an output-agnostic `buff_append_vformat()` formatter ([see _Doxygen_ documentation](https://guillaumeast.github.io/42_libft/html/group__print.html)).  
 - multiple printer wrappers `ft_vdprintf()`, `ft_dprintf()`, `ft_vprintf()` and `ft_printf()` ([see _Doxygen_ documentation](https://guillaumeast.github.io/42_libft/html/group__print.html)).
