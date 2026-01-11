@@ -5,7 +5,7 @@
 [![42](https://img.shields.io/badge/-black?logo=42&style=flat)](#)
 [![C](https://img.shields.io/badge/Language-C-A8B9CC?style=flat&logo=c&logoColor=white)](#)
 [![Bonus](https://img.shields.io/badge/Bonus%20included-YES-darkgreen)](#)
-[![Grade](https://img.shields.io/badge/Grade-To%20be%20rated-orange)](#)
+[![Grade: 125/100](https://img.shields.io/badge/Grade-125%2F100-darkgreen)]()
 
 ## 📋 Table of Contents
 - [📇 Description](#-description)
