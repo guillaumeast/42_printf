@@ -7,7 +7,9 @@
 [![Bonus](https://img.shields.io/badge/Bonus%20included-YES-darkgreen)](#)
 [![Grade: 125/100](https://img.shields.io/badge/Grade-125%2F100-darkgreen)]()
 
-<img width="144" height="74" alt="printf" src="https://github.com/user-attachments/assets/dbb39b8f-ed16-4512-9a0e-447f189bbade" />
+<img src="https://github.com/user-attachments/assets/98b2a7be-c2d3-41b3-8168-f7bcd89e7d94" style="width:100%;height:100%;object-fit:cover;" />
+<img src="https://github.com/user-attachments/assets/0d869fdb-7ee1-42db-a6c4-86be6522f52a" style="width:100%;height:100%;object-fit:cover;" />
+<img src="https://github.com/user-attachments/assets/8564281f-cb90-40d5-a716-7af744be334e" style="width:100%;height:100%;object-fit:cover;" />
 
 After evaluation, I refactored this project and integrated it into my [libft](https://github.com/guillaumeast/42_libft) as:  
 - an output-agnostic `buff_append_vformat()` formatter ([see _Doxygen_ documentation](https://guillaumeast.github.io/42_libft/html/group__print.html)).  
