@@ -7,6 +7,10 @@
 [![Bonus](https://img.shields.io/badge/Bonus%20included-YES-darkgreen)](#)
 [![Grade: 125/100](https://img.shields.io/badge/Grade-125%2F100-darkgreen)]()
 
+After evaluation, I refactored this project and integrated it into my [libft](https://github.com/guillaumeast/42_libft) as:  
+- an output-agnostic `buff_append_vformat()` formatter ([see _Doxygen_ documentation](https://guillaumeast.github.io/42_libft/html/group__print.html)).  
+- multiple printer wrappers `ft_vdprintf()`, `ft_dprintf()`, `ft_vprintf()` and `ft_printf()` ([see _Doxygen_ documentation](https://guillaumeast.github.io/42_libft/html/group__print.html)).
+
 ## 📋 Table of Contents
 - [📇 Description](#-description)
 - [📖 Instructions](#-instructions)
